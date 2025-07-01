@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+
+  <!-- My Style Sheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input, textarea, select {
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #f8fafc;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+            transform: translateY(-1px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            border: 3px dashed #cbd5e0;
+            border-radius: 12px;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .file-label:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .file-label.has-file {
+            border-color: #2ed573;
+            background: rgba(46, 213, 115, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #64748b;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .upload-subtext {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
+        }
+
+        .price-input {
+            position: relative;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .price-input input {
+            padding-left: 35px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e0e6ed;
+            background: #f8fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #64748b;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .quantity-input {
+            width: 80px;
+            text-align: center;
+            margin: 0 !important;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8fafc;
+            color: #64748b;
+            border: 2px solid #e0e6ed;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e0;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .validation-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .form-group.error .validation-message {
+            display: block;
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #2ed573, #17a2b8);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .form-container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .category-option {
+            position: relative;
+        }
+
+        .category-radio {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .category-label {
+            display: block;
+            padding: 15px 10px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .category-radio:checked + .category-label {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .category-label:hover {
+            border-color: #cbd5e0;
+            background: #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+
+  <!-- ============Header========== -->
+
+  <header id="header" class="header d-flex fixed-top align-items-center justify-content-end">
+    <!-- <div class="col-3 bg-info">1</div>
+        <div class="col-6 bg-dark">2</div>
+        <div class="col-3 bg-info"></div> -->
+
+    <div class="d-flex header-logo">
+      <div class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <h3 class="logo-heading d-none d-lg-block">NiceAdmins</h3>
+      </div>
+      <i class="bi bi-list toggle-sidebar-btn" data-bs-toggle="offcanvas" data-bs-target="#aside"></i>
+    </div>
+
+    <div class="search-bar me-auto">
+      <form action="" class="search-form d-flex align-items-center ">
+        <input type="text" name="" class="form-control" id="" placeholder="Search">
+        <button type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="header-nav ms-auto ">
+      <ul class="d-flex align-items-center mb-0">
+        <li class="nav-item d-block d-lg-none">
+          <a href="#" class="nav-link nav-icon search-bar-toggle">
+            <i class="bi bi-search"></i>
+          </a>
+        </li>
+        <li class="nav-item me-4 dropdown">
+          <a href="#" class="nav-link nav-icon" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-items">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-items">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-items">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-items">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul>
+
+        </li>
+        <li class="nav-item me-4 dropdown">
+          <a href="" class="nav-link nav-icon position-relative" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="">
+                <span class="badge bg-primary rounded-pill p-2 ms-2">View all</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="message-items">
+              <a href="">
+                <img src="assets/img/messages-1.jpg" alt="">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="message-items">
+              <a href="">
+                <img src="assets/img/messages-2.jpg" alt="">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="message-items">
+              <a href="">
+                <img src="assets/img/messages-3.jpg" alt="">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="">Show all messages</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item nav-profile dropdown">
+          <a href="" class="nav-link d-flex align-items-center" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="" class="rounded-circle">
+            <span class="nav-profile-name ms-2 me-1 d-none d-lg-block d-md-block">K. Anderson</span>
+            <div class="dropdown-arrow align-self-center mt-1 d-none d-lg-block d-md-block"></div>
+
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h3>Kevin Anderson</h3>
+              <span>Web Designer</span>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="">
+              <a href="" class="profile-items dropdown-item">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="">
+              <a href="" class="profile-items dropdown-item">
+                <i class="bi bi-gear"></i>
+                <span>Account Setting</span>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="">
+              <a href="" class="profile-items dropdown-item">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help</span>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="">
+              <a href="" class="profile-items dropdown-item">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <!-- header End -->
+  <!-- main -->
+  <!-- sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a href="" class="nav-link active">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse"
+          data-bs-target="#component-sidebar">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>Products</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="component-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Alert</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Accordian</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Badges</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Breadcrumbs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Buttons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Card</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Carousal</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>List group</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Modal</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Tabs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Spinners</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Tooltips</span>
+            </a>
+          </li>
+        </ul>
+
+      </li>
+
+      <li class="nav-item">
+        <a href="#form-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-journal-text"></i>
+          <span>Orders</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="form-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Form Elements</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Form Layouts</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Form Editors</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Form Validation</span>
+            </a>
+          </li>
+
+        </ul>
+
+      </li>
+
+      <li class="nav-item">
+        <a href="#table-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-layout-text-window-reverse"></i>
+          <span>Returns</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="table-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>General Tables</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Data Tables</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="#chart-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-bar-chart"></i>
+          <span>Refunds</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="chart-sidebar">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Chart.js</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>AppexCharts</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>ECharts</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="#icons-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-gem"></i>
+          <span>Sale</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="icons-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Bootstrap icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Remix Icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Boxicons</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="#icons-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-gem"></i>
+          <span>Analytics</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="icons-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Bootstrap icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Remix Icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Boxicons</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="#icons-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-gem"></i>
+          <span>Customers</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="icons-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Bootstrap icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Remix Icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Boxicons</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="#icons-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-gem"></i>
+          <span>Inventory</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="icons-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Bootstrap icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Remix Icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Boxicons</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="#icons-sidebar" class="nav-link collapsed sidebar-dropdown-head" data-bs-toggle="collapse">
+          <i class="bi bi-gem"></i>
+          <span>Categories</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul class="sidebar-component-dropdown collapse" id="icons-sidebar" data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Bootstrap icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Remix Icons</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <span>Boxicons</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+
+    </ul>
+  </aside>
+  <!-- Sidebar End -->
+  <!-- main -->
+  <main class="main" id="main">
+    <div class="main-description-container">
+      <h3 class="main-description">Products</h3>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#index.html">Home</a>
+          </li>
+          <li class="breadcrumb-item active">
+            products
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <section>
+
+    <div class="container">
+        <!-- <div class="header">
+            <h1>Add New Product</h1>
+            <p>Complete the form below to add a product to your inventory</p>
+        </div> -->
+
+        <div class="success-message" id="successMessage">
+            <h3>Product Added Successfully!</h3>
+            <p>The product has been added to your inventory.</p>
+        </div>
+
+        <div class="form-container">
+            <form id="productForm" novalidate>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="productName">Product Name <span class="required">*</span></label>
+                        <input type="text" id="productName" name="productName" required>
+                        <div class="validation-message">Product name is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">Price <span class="required">*</span></label>
+                        <div class="price-input">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="productPrice" name="productPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="validation-message">Please enter a valid price</div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="productDescription">Description <span class="required">*</span></label>
+                        <textarea id="productDescription" name="productDescription" placeholder="Enter detailed product description..." required></textarea>
+                        <div class="validation-message">Product description is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productQuantity">Quantity in Stock <span class="required">*</span></label>
+                        <div class="quantity-controls">
+                            <button type="button" class="quantity-btn" id="decreaseQty">−</button>
+                            <input type="number" id="productQuantity" name="productQuantity" class="quantity-input" min="0" value="1" required>
+                            <button type="button" class="quantity-btn" id="increaseQty">+</button>
+                        </div>
+                        <div class="validation-message">Quantity must be at least 0</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category <span class="required">*</span></label>
+                        <div class="category-grid">
+                            <div class="category-option">
+                                <input type="radio" id="electronics" name="category" value="electronics" class="category-radio" required>
+                                <label for="electronics" class="category-label">Electronics</label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="clothing" name="category" value="clothing" class="category-radio">
+                                <label for="clothing" class="category-label">Clothing</label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="home" name="category" value="home" class="category-radio">
+                                <label for="home" class="category-label">Home & Garden</label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="books" name="category" value="books" class="category-radio">
+                                <label for="books" class="category-label">Books</label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="sports" name="category" value="sports" class="category-radio">
+                                <label for="sports" class="category-label">Sports</label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="beauty" name="category" value="beauty" class="category-radio">
+                                <label for="beauty" class="category-label">Beauty</label>
+                            </div>
+                        </div>
+                        <div class="validation-message">Please select a category</div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="productImage">Product Image <span class="required">*</span></label>
+                        <div class="file-upload">
+                            <input type="file" id="productImage" name="productImage" class="file-input" accept="image/*" required>
+                            <label for="productImage" class="file-label" id="fileLabel">
+                                <div class="upload-icon">📷</div>
+                                <div class="upload-text">Click to upload product image</div>
+                                <div class="upload-subtext">Supports: JPG, PNG, GIF (Max: 5MB)</div>
+                            </label>
+                        </div>
+                        <div class="validation-message">Please select a product image</div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" id="resetBtn">Reset Form</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <span class="btn-text">Add Product</span>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <span>Adding...</span>
+                        </div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </section>
+  </main>
+
+
+
+  <!-- <script src="assets/js/test.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+<script>
+        class ProductForm {
+            constructor() {
+                this.form = document.getElementById('productForm');
+                this.fileInput = document.getElementById('productImage');
+                this.fileLabel = document.getElementById('fileLabel');
+                this.imagePreview = document.getElementById('imagePreview');
+                this.submitBtn = document.getElementById('submitBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.successMessage = document.getElementById('successMessage');
+                
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.setupQuantityControls();
+            }
+
+            bindEvents() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                this.resetBtn.addEventListener('click', () => this.resetForm());
+                this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+                
+                // Real-time validation
+                const inputs = this.form.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                    input.addEventListener('input', () => {
+                        if (input.classList.contains('error')) {
+                            this.validateField(input);
+                        }
+                    });
+                });
+            }
+
+            setupQuantityControls() {
+                const decreaseBtn = document.getElementById('decreaseQty');
+                const increaseBtn = document.getElementById('increaseQty');
+                const quantityInput = document.getElementById('productQuantity');
+
+                decreaseBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(quantityInput.value) || 0;
+                    if (currentValue > 0) {
+                        quantityInput.value = currentValue - 1;
+                        this.validateField(quantityInput);
+                    }
+                });
+
+                increaseBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(quantityInput.value) || 0;
+                    quantityInput.value = currentValue + 1;
+                    this.validateField(quantityInput);
+                });
+            }
+
+            handleFileSelect(event) {
+                const file = event.target.files[0];
+                
+                if (!file) {
+                    this.resetFileInput();
+                    return;
+                }
+
+                // Validate file
+                if (!this.validateFile(file)) {
+                    this.resetFileInput();
+                    return;
+                }
+
+                // Update file label
+                this.fileLabel.classList.add('has-file');
+                this.fileLabel.innerHTML = `
+                    <div class="upload-icon">✅</div>
+                    <div class="upload-text">${file.name}</div>
+                    <div class="upload-subtext">File selected successfully</div>
+                `;
+
+                // Show preview
+                this.showImagePreview(file);
+                
+                // Remove error state
+                const formGroup = this.fileInput.closest('.form-group');
+                formGroup.classList.remove('error');
+            }
+
+            validateFile(file) {
+                // Check file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Please select a valid image file (JPG, PNG, or GIF)');
+                    return false;
+                }
+
+                // Check file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    return false;
+                }
+
+                return true;
+            }
+
+            showImagePreview(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imagePreview.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview" class="preview-img">
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            resetFileInput() {
+                this.fileLabel.classList.remove('has-file');
+                this.fileLabel.innerHTML = `
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Click to upload product image</div>
+                    <div class="upload-subtext">Supports: JPG, PNG, GIF (Max: 5MB)</div>
+                `;
+                this.imagePreview.innerHTML = '';
+            }
+
+            validateField(field) {
+                const formGroup = field.closest('.form-group');
+                let isValid = true;
+
+                // Remove previous error state
+                formGroup.classList.remove('error');
+
+                // Validate based on field type
+                switch(field.type) {
+                    case 'text':
+                        if (field.required && !field.value.trim()) {
+                            isValid = false;
+                        }
+                        break;
+                    
+                    case 'number':
+                        if (field.required && (!field.value || parseFloat(field.value) < 0)) {
+                            isValid = false;
+                        }
+                        break;
+                    
+                    case 'file':
+                        if (field.required && !field.files.length) {
+                            isValid = false;
+                        }
+                        break;
+                    
+                    case 'radio':
+                        const radioGroup = document.getElementsByName(field.name);
+                        isValid = Array.from(radioGroup).some(radio => radio.checked);
+                        break;
+                    
+                    default:
+                        if (field.required && !field.value.trim()) {
+                            isValid = false;
+                        }
+                }
+
+                // Apply error state if invalid
+                if (!isValid) {
+                    formGroup.classList.add('error');
+                }
+
+                return isValid;
+            }
+
+            validateForm() {
+                const inputs = this.form.querySelectorAll('input[required], textarea[required]');
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    if (!this.validateField(input)) {
+                        isValid = false;
+                    }
+                });
+
+                // Validate category radio buttons
+                const categoryRadios = document.getElementsByName('category');
+                const categorySelected = Array.from(categoryRadios).some(radio => radio.checked);
+                if (!categorySelected) {
+                    const categoryGroup = categoryRadios[0].closest('.form-group');
+                    categoryGroup.classList.add('error');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            async handleSubmit(event) {
+                event.preventDefault();
+
+                if (!this.validateForm()) {
+                    this.scrollToFirstError();
+                    return;
+                }
+
+                this.setLoading(true);
+
+                try {
+                    // Simulate API call
+                    const formData = this.getFormData();
+                    const result = await this.submitToAPI(formData);
+                    
+                    this.showSuccess();
+                    this.resetForm();
+                    
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    alert('Error adding product. Please try again.');
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            getFormData() {
+                const formData = new FormData();
+                
+                // Get all form fields
+                const fields = this.form.querySelectorAll('input, textarea, select');
+                fields.forEach(field => {
+                    if (field.type === 'file' && field.files.length > 0) {
+                        formData.append(field.name, field.files[0]);
+                    } else if (field.type === 'radio' && field.checked) {
+                        formData.append(field.name, field.value);
+                    } else if (field.type !== 'radio' && field.type !== 'file') {
+                        formData.append(field.name, field.value);
+                    }
+                });
+
+                return formData;
+            }
+
+            async submitToAPI(formData) {
+                // Simulate API call - replace with your actual endpoint
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        console.log('Product data:', Object.fromEntries(formData.entries()));
+                        resolve({ success: true, id: Date.now() });
+                    }, 2000);
+                });
+
+                // Example actual API call:
+                /*
+                const response = await fetch('/api/products', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to add product');
+                }
+                
+                return await response.json();
+                */
+            }
+
+            setLoading(loading) {
+                const btnText = this.submitBtn.querySelector('.btn-text');
+                const loadingEl = this.submitBtn.querySelector('.loading');
+                
+                if (loading) {
+                    btnText.style.display = 'none';
+                    loadingEl.style.display = 'flex';
+                    this.submitBtn.disabled = true;
+                } else {
+                    btnText.style.display = 'inline';
+                    loadingEl.style.display = 'none';
+                    this.submitBtn.disabled = false;
+                }
+            }
+
+            showSuccess() {
+                this.successMessage.style.display = 'block';
+                this.successMessage.scrollIntoView({ behavior: 'smooth' });
+                
+                setTimeout(() => {
+                    this.successMessage.style.display = 'none';
+                }, 5000);
+            }
+
+            resetForm() {
+                this.form.reset();
+                this.resetFileInput();
+                
+                // Remove all error states
+                const errorGroups = this.form.querySelectorAll('.form-group.error');
+                errorGroups.forEach(group => group.classList.remove('error'));
+                
+                // Reset quantity to 1
+                document.getElementById('productQuantity').value = 1;
+            }
+
+            scrollToFirstError() {
+                const firstError = this.form.querySelector('.form-group.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }
+
+        // Initialize the form when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProductForm();
+        });
+    </script>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.min.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+   <script>
+     
+   </script>
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>
